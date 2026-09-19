@@ -1,9 +1,43 @@
 name = "ExtraStats"
 uuid = "e63c6cca-01f4-4512-8a9d-7d793fea96eb"
-authors = ["Sam Aucoin", "sam.aucoin@dal.ca"]
 version = "1.0.0-DEV"
+authors = ["Sam Aucoin", "sam.aucoin@dal.ca"]
+
+[deps]
+ADTypes = "47edcb42-4c32-4615-8424-f2b9edc5f35b"
+CairoMakie = "13f3f980-e62b-5c42-98c6-ff1f3baf88f0"
+DimensionalData = "0703355e-b756-11e9-17c0-8b28908087d0"
+Distributions = "31c24e10-a181-5473-b8eb-7969acd0382f"
+DocumenterTools = "35a29f4d-8980-5a13-9543-d66fff28ecb8"
+HypothesisTests = "09f84164-cd44-5f33-b23f-e6b0d136a0d5"
+Integrals = "de52edbc-65ea-441a-8357-d3a637375a31"
+LinearAlgebra = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
+LsqFit = "2fda8390-95c7-5789-9bda-21331edee243"
+NonlinearSolve = "8913a72c-1f9b-4ce2-8d82-65094dcecaec"
+Optim = "429524aa-4258-5aef-a3af-852621145aeb"
+SpecialFunctions = "276daf66-3868-5448-9aa4-cd146d93841b"
+Statistics = "10745b16-79ce-11e8-11f9-7d13ad32a3b2"
+StatsBase = "2913bbd2-ae8a-5f71-8c99-4fb6c76f3a91"
+Symbolics = "0c5d862f-8b57-4792-8d23-62f2024744c7"
+ToeplitzMatrices = "c751599d-da0a-543b-9d20-d0a503d91d24"
 
 [compat]
+ADTypes = "1.24.0"
+CairoMakie = "0.15.14"
+DimensionalData = "0.30.2"
+Distributions = "0.25.131"
+DocumenterTools = "0.1.21"
+HypothesisTests = "0.12.2"
+Integrals = "5.5.2"
+LinearAlgebra = "1.12.0"
+LsqFit = "0.16.1"
+NonlinearSolve = "4.32.0"
+Optim = "2.3.2"
+SpecialFunctions = "2.9.0"
+Statistics = "1.11.5"
+StatsBase = "0.34.13"
+Symbolics = "7.40.0"
+ToeplitzMatrices = "0.8.5"
 julia = "1.10.10"
 
 [extras]

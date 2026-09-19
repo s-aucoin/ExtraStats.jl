@@ -1,6 +1,8 @@
 using ExtraStats
 using Test
 
-@testset "ExtraStats.jl" begin
-    # Write your tests here.
+@testset "ExtraStats" begin
+    include("MiscellaneousFunctions.jl")
+    include("LeastSquaresFitting/LeastSquaresFitting.jl")
+    include("StatisticalDistributions/StatisticalDistributions.jl")
 end
