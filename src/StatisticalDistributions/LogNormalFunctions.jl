@@ -1,5 +1,3 @@
-#import ExtraStats.StatisticalDistributions.NormalFunctions: ∫Normaldx
-
 export lognormal, LogNormalCDF
 
 """

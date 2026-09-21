@@ -2,7 +2,6 @@ using Statistics
 using StatsBase        # For more stats
 using Optim            # For optimizing functions
 using Distributions    # For statistical distributions
-import ExtraStats.MiscellaneousFunctions: nanmean, bincounts
 
 export CalculateRMSE, r², χ²Test, KuiperTest
 

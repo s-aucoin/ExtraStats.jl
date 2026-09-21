@@ -1,8 +1,3 @@
-#=
-import ExtraStats.StatisticalDistributions.NormalFunctions: ∫Normaldx
-import ExtraStats.StatisticalDistributions.LogNormalFunctions: lognormal, LogNormalCDF
-import ExtraStats.StatisticalDistributions.SkewNormalFunctions: OwensTFunction
-=#
 export logskewnormal, LogSkewNormalCDF
 
 """

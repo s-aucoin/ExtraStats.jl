@@ -1,5 +1,4 @@
 using Integrals        # For computing integrals
-#import ExtraStats.StatisticalDistributions.NormalFunctions: gaussian, normal, ∫Normaldx
 
 export skewgaussian, skewnormal,
         SkewNormalCDF, OwensTFunction, SkewNormalCDF, 
