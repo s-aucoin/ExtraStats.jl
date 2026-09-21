@@ -1,5 +1,4 @@
-module LogNormalFunctions
-import ExtraStats.StatisticalDistributions.NormalFunctions: ∫Normaldx
+#import ExtraStats.StatisticalDistributions.NormalFunctions: ∫Normaldx
 
 export lognormal, LogNormalCDF
 
@@ -28,5 +27,3 @@ end
 Calculate the CDF of a Log-Normal pdf with centre `μ` and standard deviation `σ` at `x`.
 """
 LogNormalCDF(x, μ, σ) = ∫Normaldx((log(x) - μ) / σ)
-
-end

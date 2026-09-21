@@ -1,5 +1,3 @@
-module LeastSquaresFitting
-
 using StatsBase        # For more stats
 using HypothesisTests  # For even more stats
 using LinearAlgebra    # For linear algebra
@@ -9,12 +7,7 @@ using CairoMakie       # For plotting
 export fittest, OLS, GLS, sqcovar
 
 include("FitEvaluation.jl")
-using .FitEvaluation
-export FitEvaluation
-
 include("LinearFitUncertainty.jl")
-using .LinearFitUncertainty
-export LinearFitUncertainty
 
 
 """
@@ -276,7 +269,4 @@ function sqcovar(X)
     K = eigvec * Diagonal(sqrt.(max.(eigval, 0.0))) * inv(eigvec)
 
     return Hermitian(K)
-end
-
-
 end

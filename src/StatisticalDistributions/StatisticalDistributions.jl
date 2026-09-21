@@ -1,5 +1,3 @@
-module StatisticalDistributions
-
 using Symbolics        # For symbolic math
 using Optim            # For optimizing functions
 using NonlinearSolve   # For solving nonlinear equations
@@ -8,20 +6,9 @@ import ADTypes          # For modern autodiff backend selection
 export find_pdf_mode, find_HDI, transform_pdf
 
 include("NormalFunctions.jl")
-using .NormalFunctions
-export NormalFunctions
-
 include("LogNormalFunctions.jl")
-using .LogNormalFunctions
-export LogNormalFunctions
-
 include("SkewNormalFunctions.jl")
-using .SkewNormalFunctions
-export SkewNormalFunctions
-
 include("LogSkewNormalFunctions.jl")
-using .LogSkewNormalFunctions
-export LogSkewNormalFunctions
 
 
 """
@@ -105,7 +92,4 @@ function find_HDI(pdf, samples; target_mass = 0.68, lrguess=0.01*minimum(samples
     HDIsolution = solve(HDI_prob) # solve for the two roots
 
     return HDIsolution.u
-end
-
-
 end

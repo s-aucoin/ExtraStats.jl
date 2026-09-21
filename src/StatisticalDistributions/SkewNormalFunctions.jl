@@ -1,7 +1,5 @@
-module SkewNormalFunctions
-
 using Integrals        # For computing integrals
-import ExtraStats.StatisticalDistributions.NormalFunctions: gaussian, normal, ∫Normaldx
+#import ExtraStats.StatisticalDistributions.NormalFunctions: gaussian, normal, ∫Normaldx
 
 export skewgaussian, skewnormal,
         SkewNormalCDF, OwensTFunction, SkewNormalCDF, 
@@ -160,7 +158,4 @@ Calculate the mode of a Skew-Normal function with location `λ`, scale `ω`, and
 """
 function skew_mode(λ, ω, ξ)
     return λ + ω*m₀(ξ)
-end
-
-
 end

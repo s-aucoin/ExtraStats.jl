@@ -1,9 +1,8 @@
-module LogSkewNormalFunctions
-
+#=
 import ExtraStats.StatisticalDistributions.NormalFunctions: ∫Normaldx
 import ExtraStats.StatisticalDistributions.LogNormalFunctions: lognormal, LogNormalCDF
 import ExtraStats.StatisticalDistributions.SkewNormalFunctions: OwensTFunction
-
+=#
 export logskewnormal, LogSkewNormalCDF
 
 """
@@ -31,5 +30,3 @@ end
 Calculate the CDF of a Log-Skew-Normal pdf with location `λ`, scale `ω`, and shape `ξ` at `x`.
 """
 LogSkewNormalCDF(x, λ, ω, ξ) = LogNormalCDF(x, λ, ω) - 2*OwensTFunction((log(x) - λ)/ω, ξ)
-
-end

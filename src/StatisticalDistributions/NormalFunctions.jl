@@ -1,8 +1,7 @@
-module NormalFunctions
-
 using SpecialFunctions # For extra math functions
 
 export gaussian, normal, ∫Normaldx, NormalCDF
+
 
 """
     gaussian(x, A, μ, σ)
@@ -28,18 +27,18 @@ end
 
 Calculate the value of a Normal function with centre `μ` and standard deviation `σ` at `x`.
 """
-    function normal(x, μ, σ)
-        return 1/(sqrt(2*π*σ^2)) * exp(-(x - μ)^2/(2*σ^2)) # make the pdf normalized
-    end
+function normal(x, μ, σ)
+    return 1/(sqrt(2*π*σ^2)) * exp(-(x - μ)^2/(2*σ^2)) # make the pdf normalized
+end
 
 """
     normal(x, p)
 
 Calculate the value of a Normal function with parameter vector `p` at `x`.
 """
-    function normal(x, p)
-        return 1/(sqrt.(2*π .* p[2].^2)) .* exp.(-(x .- p[1]).^2 ./(2 .*p[2].^2)) # make the pdf normalized
-    end
+function normal(x, p)
+    return 1/(sqrt.(2*π .* p[2].^2)) .* exp.(-(x .- p[1]).^2 ./(2 .*p[2].^2)) # make the pdf normalized
+end
 
 
 """
@@ -56,5 +55,3 @@ Calculate the value of the integral of a Normal function at `x`.
 Calculate the CDF of a Normal pdf with centre `μ` and standard deviation `σ` at `x`.
 """
 NormalCDF(x, μ, σ) = ∫Normaldx((x - μ) / σ)
-
-end

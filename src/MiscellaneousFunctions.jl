@@ -1,5 +1,3 @@
-module MiscellaneousFunctions
-
 using DimensionalData
 using Statistics
 import Base.Threads.@threads # For parallel computing
@@ -108,31 +106,31 @@ Bin `datax` in 1 dimension between `binedgesx`.
 
 Optionally normalize by bin area and number of data points to return a probability density function using `makepdf=true`.
 """
-    function bincounts(datax, binedgesx; makepdf=true)
+function bincounts(datax, binedgesx; makepdf=true)
 
-        ## The number of bins is one less than the size of the bin edges ##
-        nbinsx = size(binedgesx, 1)-1
+    ## The number of bins is one less than the size of the bin edges ##
+    nbinsx = size(binedgesx, 1)-1
 
-        bin_areas = diff(binedgesx)
+    bin_areas = diff(binedgesx)
 
-        counts = Array{Float64}(undef, nbinsx)
+    counts = Array{Float64}(undef, nbinsx)
 
-        if makepdf
-            @threads for x in collect(1:nbinsx)
-                counts[x] = sum((datax .> binedgesx[x] .&& datax .< binedgesx[x+1])) ./ bin_areas[x]
-            end
-            counts = counts ./ length(datax)
-        else
-            @threads for x in collect(1:nbinsx)
-                counts[x] = sum((datax .> binedgesx[x] .&& datax .< binedgesx[x+1]))
-            end   
+    if makepdf
+        @threads for x in collect(1:nbinsx)
+            counts[x] = sum((datax .> binedgesx[x] .&& datax .< binedgesx[x+1])) ./ bin_areas[x]
         end
-
-        ## Find the bin centers for plotting ##
-        bincenx = binedgesx[1:end-1] .+ diff(binedgesx)/2
-
-        return (; counts, bincenx)
+        counts = counts ./ length(datax)
+    else
+        @threads for x in collect(1:nbinsx)
+            counts[x] = sum((datax .> binedgesx[x] .&& datax .< binedgesx[x+1]))
+        end   
     end
+
+    ## Find the bin centers for plotting ##
+    bincenx = binedgesx[1:end-1] .+ diff(binedgesx)/2
+
+    return (; counts, bincenx)
+end
 
 """
     bincounts(datax, datay, binedgesx, binedgesy; makepdf=true)
@@ -141,32 +139,30 @@ Impose a 2d grid on the x-y pairs of data in `datax` and `datay` and count the n
 
 Optionally normalize by bin area and number of data points to return a probability density function using `makepdf=true`.
 """
-    function bincounts(datax, datay, binedgesx, binedgesy; makepdf=true)
+function bincounts(datax, datay, binedgesx, binedgesy; makepdf=true)
 
-        ## The number of bins is one less than the size of the bin edges ##
-        nbinsx = size(binedgesx, 1)-1
-        nbinsy = size(binedgesy, 1)-1
+    ## The number of bins is one less than the size of the bin edges ##
+    nbinsx = size(binedgesx, 1)-1
+    nbinsy = size(binedgesy, 1)-1
 
-        bin_areas = diff(binedgesx) .* diff(binedgesy)'
+    bin_areas = diff(binedgesx) .* diff(binedgesy)'
 
-        counts = Array{Float64}(undef, nbinsx, nbinsy)
+    counts = Array{Float64}(undef, nbinsx, nbinsy)
 
-        if makepdf
-            @threads for (x, y) in collect(Iterators.product(1:nbinsx, 1:nbinsy))
-                counts[x,y] = sum((datax .> binedgesx[x] .&& datax .< binedgesx[x+1]) .&& (datay .> binedgesy[y] .&& datay .< binedgesy[y+1])) ./ bin_areas[x, y]
-            end
-            counts = counts ./ length(datax)
-        else
-            @threads for (x, y) in collect(Iterators.product(1:nbinsx, 1:nbinsy))
-                counts[x,y] = sum((datax .> binedgesx[x] .&& datax .< binedgesx[x+1]) .&& (datay .> binedgesy[y] .&& datay .< binedgesy[y+1]))
-            end   
+    if makepdf
+        @threads for (x, y) in collect(Iterators.product(1:nbinsx, 1:nbinsy))
+            counts[x,y] = sum((datax .> binedgesx[x] .&& datax .< binedgesx[x+1]) .&& (datay .> binedgesy[y] .&& datay .< binedgesy[y+1])) ./ bin_areas[x, y]
         end
-
-        ## Find the bin centers for plotting ##
-        bincenx = binedgesx[1:end-1] .+ diff(binedgesx)/2
-        binceny = binedgesy[1:end-1] .+ diff(binedgesy)/2
-
-        return (; counts, bincenx, binceny)
+        counts = counts ./ length(datax)
+    else
+        @threads for (x, y) in collect(Iterators.product(1:nbinsx, 1:nbinsy))
+            counts[x,y] = sum((datax .> binedgesx[x] .&& datax .< binedgesx[x+1]) .&& (datay .> binedgesy[y] .&& datay .< binedgesy[y+1]))
+        end   
     end
 
+    ## Find the bin centers for plotting ##
+    bincenx = binedgesx[1:end-1] .+ diff(binedgesx)/2
+    binceny = binedgesy[1:end-1] .+ diff(binedgesy)/2
+
+    return (; counts, bincenx, binceny)
 end

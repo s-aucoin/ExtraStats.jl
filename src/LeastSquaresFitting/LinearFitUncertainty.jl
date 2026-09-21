@@ -1,5 +1,3 @@
-module LinearFitUncertainty
-
 using Statistics
 using Distributions
 
@@ -80,7 +78,4 @@ function uncertainty_lines(β_est, α_est, x, xi, yi, yhat, γ)
     lower_ln = α_est .+ β_est .* x .- ξ
 
     return (; upper_ln, lower_ln)
-end
-
-
 end

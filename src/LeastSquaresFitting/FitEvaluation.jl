@@ -1,5 +1,3 @@
-module FitEvaluation
-
 using Statistics
 using StatsBase        # For more stats
 using Optim            # For optimizing functions
@@ -22,11 +20,11 @@ CalculateRMSE(e) = sqrt(mean(e.^2))
 
 Estimate the coefficient of determination of a fit to `data` with residuals `e`.
 """
-    function r²(data, e)
-        SSR = sum(e.^2)
-        SST = sum((filter(!isnan, data) .- nanmean(data)).^2)
-        return 1 - SSR/SST
-    end
+function r²(data, e)
+    SSR = sum(e.^2)
+    SST = sum((filter(!isnan, data) .- nanmean(data)).^2)
+    return 1 - SSR/SST
+end
 
 
 """
@@ -85,6 +83,4 @@ function KuiperTest(x, Fₕ)
 
 
     return PosSideMax + NegSideMax # calculate the Kuiper statistic
-end
-
 end

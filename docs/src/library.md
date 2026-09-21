@@ -10,8 +10,12 @@ All functions exported by this package are listed below.
 ## Functions
 
 ### Micellaneous
-```@autodocs
-Modules = [MiscellaneousFunctions]
+```@docs
+nanmean
+nanvar
+nanstd
+moving_average
+bincounts
 ```
 
 ### Least Squares Fitting
