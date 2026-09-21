@@ -1,12 +1,15 @@
 module ExtraStats
 
-include("MiscellaneousFunctions.jl")
-using .MiscellaneousFunctions
+    include("MiscellaneousFunctions.jl")
+    using .MiscellaneousFunctions
+    export MiscellaneousFunctions
 
-include("LeastSquaresFitting/LeastSquaresFitting.jl")
-using .LeastSquaresFitting
+    include("LeastSquaresFitting/LeastSquaresFitting.jl")
+    using .LeastSquaresFitting
+    export LeastSquaresFitting
 
-include("StatisticalDistributions/StatisticalDistributions.jl")
-using .StatisticalDistributions
+    include("StatisticalDistributions/StatisticalDistributions.jl")
+    using .StatisticalDistributions
+    export StatisticalDistributions
 
 end

@@ -10,9 +10,11 @@ export fittest, OLS, GLS, sqcovar
 
 include("FitEvaluation.jl")
 using .FitEvaluation
+export FitEvaluation
 
 include("LinearFitUncertainty.jl")
 using .LinearFitUncertainty
+export LinearFitUncertainty
 
 
 """

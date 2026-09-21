@@ -9,15 +9,19 @@ export find_pdf_mode, find_HDI, transform_pdf
 
 include("NormalFunctions.jl")
 using .NormalFunctions
+export NormalFunctions
 
 include("LogNormalFunctions.jl")
 using .LogNormalFunctions
+export LogNormalFunctions
 
 include("SkewNormalFunctions.jl")
 using .SkewNormalFunctions
+export SkewNormalFunctions
 
 include("LogSkewNormalFunctions.jl")
 using .LogSkewNormalFunctions
+export LogSkewNormalFunctions
 
 
 """

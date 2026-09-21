@@ -4,7 +4,12 @@ using ExtraStats
 makedocs(
     sitename = "ExtraStats",
     format = Documenter.HTML(),
-    modules = [ExtraStats]
+    modules = [ExtraStats],
+    remotes = nothing,
+    pages = ["Library" => "library.md", 
+            "Miscellaneous" => "misc.md", 
+            "Least Squares Fitting" => "LeastSquaresFitting/least_squares_fitting.md", 
+            "Statistical Distributions" => "StatisticalDistributions/statistical_distributions.md"]
 )
 
 # Documenter can also automatically deploy documentation to gh-pages.
