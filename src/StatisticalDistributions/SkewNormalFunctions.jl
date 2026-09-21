@@ -1,7 +1,7 @@
 using Integrals        # For computing integrals
 
 export skewgaussian, skewnormal,
-        SkewNormalCDF, OwensTFunction, SkewNormalCDF, 
+        SkewNormalCDF, OwensTFunction,
         skew_δ, skew_mean, SkewNormalμ2λ,
         skew_σ, SkewNormalσ2ω,
         skew_skew, SkewNormalSkewness2Posδ, SkewNormalSkewness2Posξ,

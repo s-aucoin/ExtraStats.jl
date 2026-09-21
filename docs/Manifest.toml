@@ -659,7 +659,7 @@ version = "0.1.6"
 
 [[deps.ExtraStats]]
 deps = ["ADTypes", "CairoMakie", "DimensionalData", "Distributions", "DocumenterTools", "HypothesisTests", "Integrals", "LinearAlgebra", "LsqFit", "NonlinearSolve", "Optim", "SpecialFunctions", "Statistics", "StatsBase", "Symbolics", "ToeplitzMatrices"]
-git-tree-sha1 = "dc768e0edcce8bc10c052752f2fa547d42a6d63a"
+git-tree-sha1 = "a38b14950721e13d2e431e7a363b859b30158502"
 repo-rev = "main"
 repo-url = "https://github.com/s-aucoin/ExtraStats.jl"
 uuid = "e63c6cca-01f4-4512-8a9d-7d793fea96eb"

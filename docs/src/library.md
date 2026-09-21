@@ -70,7 +70,6 @@ skewgaussian
 skewnormal
 SkewNormalCDF
 OwensTFunction
-SkewNormalCDF
 skew_δ
 skew_mean
 SkewNormalμ2λ,
