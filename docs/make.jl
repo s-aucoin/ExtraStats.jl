@@ -6,10 +6,11 @@ makedocs(
     format = Documenter.HTML(),
     modules = [ExtraStats],
     remotes = nothing,
-    pages = ["Library" => "library.md", 
+    pages = ["Home" => "index.md",
             "Miscellaneous" => "misc.md", 
             "Least Squares Fitting" => "LeastSquaresFitting/least_squares_fitting.md", 
-            "Statistical Distributions" => "StatisticalDistributions/statistical_distributions.md"]
+            "Statistical Distributions" => "StatisticalDistributions/statistical_distributions.md",
+            "Library" => "library.md"]
 )
 
 # Documenter can also automatically deploy documentation to gh-pages.

@@ -2,6 +2,12 @@
 
 All functions exported by this package are listed below.
 
+## Library Contents
+```@contents
+Pages = ["library.md"]
+Depth = 3
+```
+
 ## Index
 ```@index
 ```
@@ -72,7 +78,7 @@ SkewNormalCDF
 OwensTFunction
 skew_δ
 skew_mean
-SkewNormalμ2λ,
+SkewNormalμ2λ
 skew_σ
 SkewNormalσ2ω
 skew_skew
