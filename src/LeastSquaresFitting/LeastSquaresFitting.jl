@@ -68,7 +68,7 @@ Details:
 """
 function fittest(x, y; fittype = :OLS, fitmodel = nothing, p0 = [0.1, 0.1], figshow = true)
 
-    fitfunc = getfield(LeastSquaresFitting, fittype)
+    fitfunc = getfield(ExtraStats, fittype)
 
     LSfit = fitfunc(x, y; fitmodel = fitmodel, p0 = p0)
 
