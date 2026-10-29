@@ -1,6 +1,6 @@
 name = "ExtraStats"
 uuid = "e63c6cca-01f4-4512-8a9d-7d793fea96eb"
-version = "0.1.1"
+version = "0.1.2"
 authors = ["Sam Aucoin", "sam.aucoin@dal.ca"]
 
 [deps]

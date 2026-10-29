@@ -38,6 +38,8 @@ CalculateRMSE
 r²
 χ²Test
 KuiperTest
+KuiperStat
+KuiperFPP
 ```
 
 #### Linear Fit Uncertainty

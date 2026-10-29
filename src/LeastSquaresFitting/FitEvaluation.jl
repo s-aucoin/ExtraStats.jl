@@ -1,9 +1,8 @@
 using Statistics
 using StatsBase        # For more stats
-using Optim            # For optimizing functions
 using Distributions    # For statistical distributions
 
-export CalculateRMSE, r², χ²Test, KuiperTest
+export CalculateRMSE, r², χ²Test, KuiperTest, KuiperStat, KuiperFPP
 
 
 """
@@ -62,24 +61,102 @@ end
 
 
 """
-    KuiperTest(x, Fₕ)
+    KuiperTest(x::AbstractVector, Fₕ::Function)
 
-Perform Kuiper's goodness-of-fit test of the null hypothesis that the data `x` come from CDF `Fₕ`.
+Calculate the Kuiper statistic and corresponding False-Positive Probability (FPP) for observations `x` and CDF `Fₕ`.
 """
-function KuiperTest(x, Fₕ)
+function KuiperTest(x::AbstractVector, Fₕ::Function)
+    V = KuiperStat(x, Fₕ)
+    N = length(x)
+    P = KuiperFPP(V, N)
 
+    return (; V, P)
+end
+
+
+"""
+    KuiperStat(x::AbstractVector, Fₕ::Function)
+
+Calculate the Kuiper statistic for the goodness-of-fit test of the null hypothesis that the data `x` come from CDF `Fₕ`.
+"""
+function KuiperStat(x::AbstractVector, Fₕ::Function)
     F = StatsBase.ecdf(x) # calculate the empirical CDF of the data
 
-    PosSide(x) = F(x) - Fₕ(x) # for the positive side of the Kuiper statistic
-    NegSide(x) = Fₕ(x) - F(x) # for the negative side of the Kuiper statistic
+    Δ(x) = F(x) - Fₕ(x) # difference between the empirical CDF and the hypothesized CDF
 
-    # Find the maximum of each side using optimization #
-    posopt = optimize(x -> -PosSide(x), minimum(x), maximum(x))
-    PosSideMax = -Optim.minimum(posopt)
-
-    negopt = optimize(x -> -NegSide(x), minimum(x), maximum(x))
-    NegSideMax = -Optim.minimum(negopt)
-
+    PosSideMax = maximum(Δ.(x))  # the maximum of the positive side
+    NegSideMax = maximum(-Δ.(x)) # the maximum of the negative side
 
     return PosSideMax + NegSideMax # calculate the Kuiper statistic
+end
+
+
+"""
+    KuiperFPP(V::AbstractFloat, N::Integer)
+
+Calculate the False Positive Probability (FPP) given a Kuiper statistic `V` and sample size `N`.
+
+Stephens (Biometrika, 1965) give a set of exact formulae for the False Positive Probability (FPP) valid for certain ranges of Ν (cases 1-3)
+in addition to the asymptotic formulae for large Ν given by Kuiper (Indagationes Mathematicae (Proceedings), 1960) (case 4).
+
+The interpretation of the FPP is that it is the probability that the Kuiper statistic D is larger than a given `V` under the null hypothesis,
+i.e. the probability that the observed data come from the hypothesis PDF.
+The null hypothesis is that the set of {xᵢ}, i=1,...,N is an outcome of `N` draws of the hypothesis PDF fₕ.
+
+This function was written with reference to the astropy package in python.
+"""
+function KuiperFPP(V::AbstractFloat, N::Integer)
+    VN = V*N
+
+    if VN < 1 || V > 2
+        throw(DomainError(V, "1/N ≤ V ≤ 2 by definition. (VN = $VN)"))
+    end
+
+    # (case 1)
+    if VN <= 2
+        return kuiperfpp_case1(V, N) 
+
+    # (case 2)
+    elseif VN <= 3
+        return kuiperfpp_case2(V, N)
+
+    # (case 3)
+    elseif (V >= 1/2 && N % 2 == 0) || (VN >= (N-1)/2 && N % 2 == 1)
+        return kuiperfpp_case3(V, N)
+
+    # (case 4)
+    else
+        return kuiperfpp_case4(V, N)
+    end
+end
+
+function kuiperfpp_case1(V::AbstractFloat, N::Integer) 
+    return 1 - factorial(N) * (V - 1/N)^(N-1)
+end
+
+function kuiperfpp_case2(V::AbstractFloat, N::Integer)
+    s = 1/2*sqrt(-N^2*V^2 + 6N*V - 7)
+    x = 1/2*(N*V - 1)
+    α = x + s
+    β = x - s
+
+    return 1 - factorial(N - 1) * (β^(N-1)*(1-α) - α^(N-1)*(1-β)) / (N^(N-2)*(β-α))
+end
+
+function kuiperfpp_case3(V::AbstractFloat, N::Integer)
+    y(t) = V + t/N
+    Tt(t) = y(t)^(t-3) * (N*y(t)^3 - y(t)^2*t*(3-2/N)/N - t*(t-1)(t-2)/N^2)
+    summand(t) = binomial(N, t) * (1 - V - t/N)^(N-t-1) * Tt(t)
+
+    ts = 1:(floor(Int, N * (1 - V)))
+    return sum(summand.(ts))
+end
+
+function kuiperfpp_case4(V::AbstractFloat, N::Integer)
+    z = V*sqrt(N)
+    s1(m) = 2 * (4 * m^2*z^2 - 1)*exp(-2 * m^2*z^2)
+    s2(m) = m^2*(4 * m^2*z^2 - 3)*exp(-2 * m^2*z^2)
+
+    ms = 1:ceil(Int, 18.82 / z) # When m*z>18.82, exp(-2 * m^2*z^2) underflows so there is no point in going higher
+    return sum(s1.(ms) .- 8*V/3 .* s2.(ms))
 end
