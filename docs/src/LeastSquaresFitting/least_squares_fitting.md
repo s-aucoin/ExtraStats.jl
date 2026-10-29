@@ -23,6 +23,9 @@ r²
 KuiperTest
 KuiperStat
 KuiperFPP
+KSTest
+KSStat
+KSPValue
 ```
 
 

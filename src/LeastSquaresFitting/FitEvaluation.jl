@@ -2,7 +2,7 @@ using Statistics
 using StatsBase        # For more stats
 using Distributions    # For statistical distributions
 
-export CalculateRMSE, r², χ²Test, KuiperTest, KuiperStat, KuiperFPP
+export CalculateRMSE, r², χ²Test, KuiperTest, KuiperStat, KuiperFPP, KSTest, KSStat, KSPValue
 
 
 """
@@ -159,4 +159,53 @@ function kuiperfpp_case4(V::AbstractFloat, N::Integer)
 
     ms = 1:ceil(Int, 18.82 / z) # When m*z>18.82, exp(-2 * m^2*z^2) underflows so there is no point in going higher
     return sum(s1.(ms) .- 8*V/3 .* s2.(ms))
+end
+
+
+"""
+    KSTest(x::AbstractVector, Fₕ::Function)
+
+Calculate the Kolmogorov-Smirnov statistic and corresponding False-Positive Probability (FPP) for observations `x` and CDF `Fₕ`.
+"""
+function KSTest(x::AbstractVector, Fₕ::Function) 
+    K = KSStat(x, Fₕ)
+    N = length(x)
+    P = KSPValue(K, N)
+
+    return (K, P)
+end
+
+"""
+    KSStat(x::AbstractVector, Fₕ::Function)
+
+Calculate the Kolmogorov-Smirnov statistic for observations `x`, hypothesized to come from CDF `Fₕ`.
+"""
+function KSStat(x::AbstractVector, Fₕ::Function)
+    F = StatsBase.ecdf(x) # calculate the empirical CDF of the data
+
+    Δ(x) = F(x) - Fₕ(x) # difference between the empirical CDF and the hypothesized CDF
+    Δ2(x)= Fₕ(x) - F(x) # difference between the empirical CDF and the hypothesized CDF
+
+    δp = maximum(Δ.(x)) # maximum positive difference
+    δn = maximum(Δ2.(x)) # maximum negative difference
+
+    return maximum([δp, δn])
+end
+
+"""
+    KSPValue(K::AbstractFloat, N::Integer)
+
+Calculate the False Positive Probability (FPP) given a Kolmogorov-Smirnov statistic `K` and sample size `N`.
+
+The interpretation of the FPP is that it is the probability that the K-S statistic is larger than a given `K` under the null hypothesis,
+i.e. the probability that the observed data come from the hypothesis PDF.
+The null hypothesis H₀ is that the set of {xᵢ}, i=1,...,N is an outcome of `N` draws of the hypothesis PDF fₕ.
+The equivalent two-sided p-value is 2FPP, so e.g. at the 95% confidence level, reject H₀ if P < 0.025.
+"""
+function KSPValue(K::AbstractFloat, N::Integer)
+    x = K * sqrt(N)
+    summand(k) = (-1)^(k-1) * exp(-2 * k^2*x^2)
+
+    ks = 1:ceil(Int, 18.82 / x)
+    return sum(summand.(ks))
 end
