@@ -55,7 +55,10 @@ function χ²Test(x, CDF, p; nbins=500, siglevel = 0.99)
         println("The null hypothesis cannot be rejected at the $(siglevel*100)% significance level.")
     end
 
-    return (; Oi, Ei, χ²_stat, χ²_crit)
+    # determine the p-value #
+    P = Distributions.ccdf(Chisq(k-c), χ²_stat)
+
+    return (; Oi, Ei, χ²_stat, χ²_crit, P)
 end
 
 
